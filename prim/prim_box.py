@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, division, print_function
+
 
 import copy
 import logging
@@ -163,7 +163,7 @@ class PrimBox(object):
 
         qp_values = self._calculate_quasi_p(self._cur_box)
         
-        uncs = [(key, value) for key, value in qp_values.items()]
+        uncs = [(key, value) for key, value in list(qp_values.items())]
         uncs.sort(key=itemgetter(1))
         uncs = [uncs[0] for uncs in uncs]
         
@@ -189,7 +189,7 @@ class PrimBox(object):
         """
         i = self._cur_box
         qp_values = self._calculate_quasi_p(i)
-        uncs = [(key, value) for key, value in qp_values.items()]
+        uncs = [(key, value) for key, value in list(qp_values.items())]
         uncs.sort(key=itemgetter(1))
         uncs = [uncs[0] for uncs in uncs]
         n = len(uncs)
@@ -261,7 +261,7 @@ class PrimBox(object):
     def _show_limits(self):
         i = self._cur_box
         qp_values = self._calculate_quasi_p(i)
-        uncs = [(key, value) for key, value in qp_values.items()]
+        uncs = [(key, value) for key, value in list(qp_values.items())]
         uncs.sort(key=itemgetter(1))
         uncs = [uncs[0] for uncs in uncs]
         

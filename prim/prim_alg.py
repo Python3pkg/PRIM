@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import, division, print_function
+
 
 import six
 import operator
@@ -285,7 +285,7 @@ class Prim(object):
         # determine the data type for the bounds
         dtype = float
         index = ["box {}".format(i+1) for i in range(nr_boxes)]
-        for value in box_lims[0].dtype.fields.values():
+        for value in list(box_lims[0].dtype.fields.values()):
             if value[0] == object:
                 dtype = object
                 break
@@ -332,7 +332,7 @@ class Prim(object):
         
         #transform experiments to numpy array
         dtypes = self.x.dtype.fields
-        object_dtypes = [key for key, value in dtypes.items() 
+        object_dtypes = [key for key, value in list(dtypes.items()) 
                          if value[0]==np.dtype(object)]
         
         #get experiments of interest
@@ -342,13 +342,13 @@ class Prim(object):
         # if no subsets are provided all uncertainties with non dtype object 
         # are in the same subset, the name of this is r, for rotation
         if not subsets:
-            subsets = {"r":[key for key, value in dtypes.items() 
+            subsets = {"r":[key for key, value in list(dtypes.items()) 
                             if value[0].name!=np.dtype(object)]}
         else:
             # remove uncertainties that are in exclude and check whether 
             # uncertainties occur in more then one subset
             seen = set()
-            for key, value in subsets.items():
+            for key, value in list(subsets.items()):
                 value = set(value) - set(exclude)
     
                 subsets[key] = list(value)
@@ -359,7 +359,7 @@ class Prim(object):
             
         #prepare the dtypes for the new rotated experiments recarray
         new_dtypes = []
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             self._assert_dtypes(value, dtypes)
             
             # the names of the rotated columns are based on the group name 
@@ -381,14 +381,14 @@ class Prim(object):
         #iterate over the subsets, rotate them, and put them into the new 
         # recarray
         shape = 0
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             shape += len(value) 
         rotation_matrix = np.zeros((shape,shape))
         column_names = []
         row_names = []
         
         j = 0
-        for key, value in subsets.items():
+        for key, value in list(subsets.items()):
             data = self._rotate_subset(value, self.x, logical)
             subset_rotation_matrix, subset_experiments = data 
             rotation_matrix[j:j+len(value), j:j+len(value)] = subset_rotation_matrix

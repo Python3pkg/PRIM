@@ -46,7 +46,7 @@ Released under the GNU General Public License, version 3 or later.  Copyright
 is retained by the respective authors.
 """
 
-from __future__ import absolute_import
+
 
 from .exceptions import PrimError
 from .prim_alg import Prim
